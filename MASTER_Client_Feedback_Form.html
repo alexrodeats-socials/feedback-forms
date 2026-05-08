@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Feedback · Alex Rod Socials</title>
+<style>
+  :root {
+    --black:   #0F0F0F;
+    --offblk:  #1A1A1A;
+    --dkgrey:  #242424;
+    --mdgrey:  #2E2E2E;
+    --lgrey:   #454545;
+    --mgrey:   #6B6B6B;
+    --fgrey:   #AAAAAA;
+    --cream:   #E8E0D0;
+    --white:   #FFFFFF;
+    --green:   #2C3E2D;
+    --greenl:  #4A7A4B;
+    --greenhl: #D4EDD4;
+    --navy:    #1C2B3A;
+    --earth:   #3A2C1C;
+    --gold:    #C9993A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--black); }
+  body {
+    font-family: 'Arial', sans-serif;
+    background: var(--black);
+    color: var(--fgrey);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* HEADER */
+  .doc-header {
+    background: var(--offblk);
+    border-bottom: 1px solid #2A2A2A;
+    padding: 24px 0 18px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .doc-header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--mgrey);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .doc-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.5px;
+  }
+  .progress-bar-wrap {
+    width: 100%;
+    height: 3px;
+    background: var(--dkgrey);
+    position: absolute;
+    bottom: 0; left: 0;
+  }
+  .progress-bar {
+    height: 3px;
+    background: var(--greenl);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  /* WRAPPER */
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 50px 24px 100px;
+  }
+
+  /* COVER */
+  .cover {
+    padding: 40px 0 50px;
+    border-bottom: 1px solid #222;
+    margin-bottom: 50px;
+  }
+  .cover .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--mgrey);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .cover h2 {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 22px;
+    letter-spacing: -0.5px;
+  }
+  .cover p {
+    font-size: 15px;
+    color: var(--fgrey);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .cover .meta {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--mgrey);
+  }
+  .cover .meta strong { color: var(--cream); font-weight: 600; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: stretch;
+    margin: 56px 0 28px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .section-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    flex-shrink: 0;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--cream);
+  }
+  .section-text { padding: 16px 20px; }
+  .section-text h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 3px;
+  }
+  .section-text p {
+    font-size: 13px;
+    color: rgba(232,224,208,0.6);
+  }
+  .sh-green  .section-num { background: #1E2E1E; }
+  .sh-green  { background: var(--green); }
+  .sh-navy   .section-num { background: #121E28; }
+  .sh-navy   { background: var(--navy); }
+  .sh-earth  .section-num { background: #291E10; }
+  .sh-earth  { background: var(--earth); }
+  .sh-dark   .section-num { background: #1A1A1A; }
+  .sh-dark   { background: var(--mdgrey); }
+
+  /* QUESTION BLOCK */
+  .q-block { margin-bottom: 42px; }
+  .q-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--mgrey);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+  .q-note {
+    font-size: 13px;
+    color: var(--mgrey);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* SCORE */
+  .score-wrap { margin-bottom: 8px; }
+  .score-scale {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .score-btn {
+    flex: 1;
+    aspect-ratio: 1;
+    max-width: 56px;
+    background: var(--mdgrey);
+    border: 1px solid var(--lgrey);
+    color: var(--mgrey);
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-btn:hover {
+    background: var(--lgrey);
+    color: var(--cream);
+    border-color: var(--mgrey);
+  }
+  .score-btn.selected {
+    background: var(--greenl);
+    border-color: var(--greenl);
+    color: white;
+    box-shadow: 0 0 0 2px rgba(74,122,75,0.3);
+  }
+  .score-anchors {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--mgrey);
+    padding: 0 2px;
+    gap: 12px;
+  }
+  .score-anchors .left  { text-align: left; max-width: 32%; }
+  .score-anchors .mid   { text-align: center; max-width: 32%; }
+  .score-anchors .right { text-align: right; max-width: 32%; color: var(--greenhl); font-style: italic; }
+
+  /* CALL REFERENCE (replaces prefilled selected score) */
+  .call-ref {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--gold);
+    background: rgba(201,153,58,0.08);
+    border-left: 2px solid var(--gold);
+    padding: 6px 12px;
+    margin-bottom: 14px;
+    border-radius: 0 2px 2px 0;
+  }
+  .call-ref strong { color: var(--cream); font-weight: 600; }
+
+  /* TEXTAREA / INPUT */
+  textarea, input[type=text] {
+    width: 100%;
+    background: var(--dkgrey);
+    border: 1px solid var(--lgrey);
+    border-radius: 3px;
+    color: var(--cream);
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 12px 14px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  textarea { min-height: 90px; }
+  textarea::placeholder, input::placeholder { color: var(--lgrey); font-style: italic; }
+  textarea:focus, input:focus { border-color: var(--greenl); }
+
+  /* SUB-TRIGGER (revealed when score < 5) */
+  .sub-trigger {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: rgba(74,122,75,0.06);
+    border-left: 3px solid var(--greenl);
+    border-radius: 0 3px 3px 0;
+    display: none;
+  }
+  .sub-trigger.visible { display: block; }
+  .sub-trigger .sub-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--greenl);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .sub-trigger .pill-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .pill {
+    background: var(--mdgrey);
+    border: 1px solid var(--lgrey);
+    color: var(--fgrey);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Arial', sans-serif;
+  }
+  .pill:hover { border-color: var(--greenl); color: var(--cream); }
+  .pill.selected {
+    background: var(--greenl);
+    border-color: var(--greenl);
+    color: white;
+  }
+
+  /* MULTI-SELECT */
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .option-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--dkgrey);
+    border: 1px solid var(--lgrey);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .option-row:hover {
+    border-color: var(--mgrey);
+    background: var(--mdgrey);
+  }
+  .option-row.selected {
+    border-color: var(--greenl);
+    background: rgba(74,122,75,0.1);
+  }
+  .option-row .checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--lgrey);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .option-row.selected .checkbox {
+    background: var(--greenl);
+    border-color: var(--greenl);
+  }
+  .option-row.selected .checkbox::after {
+    content: '✓';
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .option-row .opt-text {
+    color: var(--cream);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .option-other-input {
+    margin-top: 8px;
+    display: none;
+  }
+  .option-other-input.visible { display: block; }
+
+  /* PAIRED MULTI-SELECT */
+  .paired-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .paired-col h4 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--cream);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .paired-col.up h4 { color: var(--greenhl); }
+  .paired-col.down h4 { color: var(--gold); }
+
+  /* SECTION DIVIDER */
+  hr {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 40px 0;
+  }
+
+  /* COMPLETE BADGE */
+  .complete-badge {
+    display: inline-block;
+    background: var(--green);
+    color: var(--greenhl);
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .complete-badge.visible { opacity: 1; }
+
+  /* EXPORT */
+  .export-section {
+    background: var(--dkgrey);
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 36px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  .export-section h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .export-section p {
+    font-size: 14px;
+    color: var(--mgrey);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .btn-export {
+    background: var(--greenl);
+    color: white;
+    border: none;
+    padding: 14px 36px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  .btn-export:hover { background: #3D6B3E; }
+  .btn-export:active { transform: scale(0.98); }
+
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--greenl);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .doc-footer {
+    border-top: 1px solid #222;
+    margin-top: 50px;
+    padding-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--mgrey);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .cover h2 { font-size: 30px; }
+    .score-btn { font-size: 14px; }
+    .section-num { width: 48px; font-size: 22px; }
+    .export-section { padding: 24px 18px; }
+    .paired-wrap { grid-template-columns: 1fr; }
+    .score-anchors { flex-direction: column; gap: 4px; }
+    .score-anchors .left, .score-anchors .mid, .score-anchors .right { max-width: 100%; text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="eyebrow">Alex Rod Socials &nbsp;·&nbsp; Client Feedback</div>
+  <h1>Month Feedback &nbsp;·&nbsp; <span id="hClientName">[Client Name]</span></h1>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+</div>
+
+<div class="wrap">
+
+  <!-- COVER -->
+  <div class="cover">
+    <span class="tag" id="hMonth">[Month / Year]</span>
+    <h2>Your feedback<br>shapes what comes next.</h2>
+    <p>Thirteen short questions. Most are tap-to-answer. The few open ones have a sentence starter so you do not have to think too hard about how to begin.</p>
+    <p>The aim is simple. Tell me what is working, what is not, and what you would tell another founder about the experience. I use your answers to redesign next month around what actually matters to you.</p>
+    <div class="meta">
+      <strong>Estimated time:</strong> 7 minutes &nbsp;·&nbsp; <strong>Save:</strong> Click "Download my answers" at the bottom.
+    </div>
+  </div>
+
+  <!-- ===== PART 1: THE STARTING POINT ===== -->
+  <div class="section-header sh-green">
+    <div class="section-num">01</div>
+    <div class="section-text">
+      <h3>The Starting Point</h3>
+      <p>Where you were before, and why you chose me</p>
+    </div>
+  </div>
+
+  <!-- 1.1 -->
+  <div class="q-block">
+    <div class="q-label">1.1 &nbsp;·&nbsp; The Decision</div>
+    <div class="q-text">What finally made you hire someone for your social media, and why now?</div>
+    <textarea id="q-1-1" placeholder="I tried doing it myself for X months and what tipped me was..." rows="3"></textarea>
+  </div>
+
+  <!-- 1.2 -->
+  <div class="q-block">
+    <div class="q-label">1.2 &nbsp;·&nbsp; Why Me Specifically</div>
+    <div class="q-text">What made you choose me over the alternatives? Pick all that apply.</div>
+    <div class="options-list" data-multi="true" id="opts-1-2">
+      <div class="option-row" data-val="strategy"><div class="checkbox"></div><div class="opt-text">You were the only one leading with strategy, not deliverables</div></div>
+      <div class="option-row" data-val="premium"><div class="checkbox"></div><div class="opt-text">The work felt premium without being cold</div></div>
+      <div class="option-row" data-val="industry"><div class="checkbox"></div><div class="opt-text">I trusted you would actually understand my world</div></div>
+      <div class="option-row" data-val="diagnosed"><div class="checkbox"></div><div class="opt-text">You diagnosed what was wrong with my setup, others just pitched packages</div></div>
+      <div class="option-row" data-val="pricing"><div class="checkbox"></div><div class="opt-text">Pricing felt accessible compared to agencies</div></div>
+      <div class="option-row" data-val="referral"><div class="checkbox"></div><div class="opt-text">Personal recommendation</div></div>
+      <div class="option-row" data-val="other"><div class="checkbox"></div><div class="opt-text">Other</div></div>
+    </div>
+    <div class="option-other-input" id="other-1-2"><input type="text" id="q-1-2-other" placeholder="Tell me what made the difference..."></div>
+    <div style="margin-top: 16px;">
+      <input type="text" id="q-1-2-sentence" placeholder="In one sentence: what's the thing about how I work that made the difference?">
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ===== PART 2: STRATEGY ===== -->
+  <div class="section-header sh-navy">
+    <div class="section-num">02</div>
+    <div class="section-text">
+      <h3>The Strategy</h3>
+      <p>How the direction we built is landing for you</p>
+    </div>
+  </div>
+
+  <!-- 2.1 -->
+  <div class="q-block">
+    <div class="q-label">2.1 &nbsp;·&nbsp; Clarity, then vs. now</div>
+    <div class="q-text">Compared to before we worked together, how clear is your direction now?</div>
+    <div class="score-wrap">
+      <div class="score-scale" data-id="score-1">
+        <button class="score-btn" data-val="0">0</button>
+        <button class="score-btn" data-val="1">1</button>
+        <button class="score-btn" data-val="2">2</button>
+        <button class="score-btn" data-val="3">3</button>
+        <button class="score-btn" data-val="4">4</button>
+        <button class="score-btn" data-val="5">5</button>
+      </div>
+      <div class="score-anchors">
+        <span class="left">0 = Just as foggy as before</span>
+        <span class="mid">3 = Noticeably clearer</span>
+        <span class="right">5 = I finally know what I am</span>
+      </div>
+    </div>
+    <div class="sub-trigger" id="sub-score-1">
+      <div class="sub-label">What would make this a 5?</div>
+      <textarea id="q-2-1-sub" placeholder="The piece that's still missing for me is..." rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- 2.2 -->
+  <div class="q-block">
+    <div class="q-label">2.2 &nbsp;·&nbsp; The Decision Test</div>
+    <div class="q-text">What is one decision you can now make faster, or with more confidence, because of the work we did?</div>
+    <textarea id="q-2-2" placeholder="Before, when faced with X I would freeze or second-guess. Now I can just..." rows="3"></textarea>
+  </div>
+
+  <!-- 2.3 -->
+  <div class="q-block">
+    <div class="q-label">2.3 &nbsp;·&nbsp; Naming What We Built</div>
+    <div class="q-text">Pick the phrase closest to what we built together. Choose up to three.</div>
+    <div class="options-list" data-multi="true" data-max="3" id="opts-2-3">
+      <div class="option-row" data-val="positioning"><div class="checkbox"></div><div class="opt-text">A clear positioning I can defend</div></div>
+      <div class="option-row" data-val="voice"><div class="checkbox"></div><div class="opt-text">A brand voice I can recognize when I read it</div></div>
+      <div class="option-row" data-val="foundation"><div class="checkbox"></div><div class="opt-text">A strategic foundation I can build the rest of the business on</div></div>
+      <div class="option-row" data-val="story"><div class="checkbox"></div><div class="opt-text">The story I had been trying to tell for years</div></div>
+      <div class="option-row" data-val="permission"><div class="checkbox"></div><div class="opt-text">Permission to stop second-guessing myself</div></div>
+      <div class="option-row" data-val="presence"><div class="checkbox"></div><div class="opt-text">A premium presence I am proud of</div></div>
+      <div class="option-row" data-val="other"><div class="checkbox"></div><div class="opt-text">Other</div></div>
+    </div>
+    <div class="option-other-input" id="other-2-3"><input type="text" id="q-2-3-other" placeholder="Your phrase..."></div>
+  </div>
+
+  <hr>
+
+  <!-- ===== PART 3: EXECUTION ===== -->
+  <div class="section-header sh-earth">
+    <div class="section-num">03</div>
+    <div class="section-text">
+      <h3>The Execution</h3>
+      <p>The actual work delivered this month</p>
+    </div>
+  </div>
+
+  <!-- 3.1 -->
+  <div class="q-block">
+    <div class="q-label">3.1 &nbsp;·&nbsp; The Quality</div>
+    <div class="q-text">Looking at the work delivered this month, how would you rate the quality?</div>
+    <div class="score-wrap">
+      <div class="score-scale" data-id="score-2">
+        <button class="score-btn" data-val="0">0</button>
+        <button class="score-btn" data-val="1">1</button>
+        <button class="score-btn" data-val="2">2</button>
+        <button class="score-btn" data-val="3">3</button>
+        <button class="score-btn" data-val="4">4</button>
+        <button class="score-btn" data-val="5">5</button>
+      </div>
+      <div class="score-anchors">
+        <span class="left">0 = Below what I would accept</span>
+        <span class="mid">3 = Solid, gets the job done</span>
+        <span class="right">5 = Better than I imagined the brand could look</span>
+      </div>
+    </div>
+    <div class="sub-trigger" id="sub-score-2">
+      <div class="sub-label">What is missing for it to be a 5?</div>
+      <textarea id="q-3-1-sub" placeholder="The gap is..." rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- 3.2 -->
+  <div class="q-block">
+    <div class="q-label">3.2 &nbsp;·&nbsp; The Voice</div>
+    <div class="q-text">When you read the captions out loud, how much do they sound like you?</div>
+    <div class="score-wrap">
+      <div class="score-scale" data-id="score-3">
+        <button class="score-btn" data-val="0">0</button>
+        <button class="score-btn" data-val="1">1</button>
+        <button class="score-btn" data-val="2">2</button>
+        <button class="score-btn" data-val="3">3</button>
+        <button class="score-btn" data-val="4">4</button>
+        <button class="score-btn" data-val="5">5</button>
+      </div>
+      <div class="score-anchors">
+        <span class="left">0 = Not me at all</span>
+        <span class="mid">3 = Close, but I would phrase it differently</span>
+        <span class="right">5 = That is exactly how I would say it</span>
+      </div>
+    </div>
+    <div class="sub-trigger" id="sub-score-3">
+      <div class="sub-label">Is this a context problem or a craft problem?</div>
+      <div class="pill-wrap" id="pills-3-2">
+        <div class="pill" data-val="context">Context: I had not given Alex enough information yet</div>
+        <div class="pill" data-val="craft">Craft: The writing did not match how I speak</div>
+        <div class="pill" data-val="both">Both</div>
+      </div>
+      <textarea id="q-3-2-sub" placeholder="One specific phrase or post where this showed up..." rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- 3.3 -->
+  <div class="q-block">
+    <div class="q-label">3.3 &nbsp;·&nbsp; Dial Up &nbsp;/&nbsp; Dial Down</div>
+    <div class="q-text">For next month, where should I push harder, and where should I pull back?</div>
+    <div class="paired-wrap">
+      <div class="paired-col up">
+        <h4>Dial up (pick 1 to 2)</h4>
+        <div class="options-list" data-multi="true" data-max="2" id="opts-3-3-up">
+          <div class="option-row" data-val="camera"><div class="checkbox"></div><div class="opt-text">More of you on camera or in posts</div></div>
+          <div class="option-row" data-val="opinions"><div class="checkbox"></div><div class="opt-text">Stronger opinions and point of view</div></div>
+          <div class="option-row" data-val="caseworks"><div class="checkbox"></div><div class="opt-text">More client work and case studies</div></div>
+          <div class="option-row" data-val="process"><div class="checkbox"></div><div class="opt-text">More process and behind-the-scenes</div></div>
+          <div class="option-row" data-val="polish"><div class="checkbox"></div><div class="opt-text">More premium polish</div></div>
+          <div class="option-row" data-val="raw"><div class="checkbox"></div><div class="opt-text">More raw, less polished</div></div>
+        </div>
+      </div>
+      <div class="paired-col down">
+        <h4>Dial down (pick 0 to 2)</h4>
+        <div class="options-list" data-multi="true" data-max="2" id="opts-3-3-down">
+          <div class="option-row" data-val="camera"><div class="checkbox"></div><div class="opt-text">Less of me on camera</div></div>
+          <div class="option-row" data-val="opinions"><div class="checkbox"></div><div class="opt-text">Less opinion-heavy content</div></div>
+          <div class="option-row" data-val="polish"><div class="checkbox"></div><div class="opt-text">Less polish, more candid</div></div>
+          <div class="option-row" data-val="carousels"><div class="checkbox"></div><div class="opt-text">Fewer carousels, more singles</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ===== PART 4: COLLABORATION ===== -->
+  <div class="section-header sh-dark">
+    <div class="section-num">04</div>
+    <div class="section-text">
+      <h3>The Collaboration</h3>
+      <p>How working together is actually going</p>
+    </div>
+  </div>
+
+  <!-- 4.1 -->
+  <div class="q-block">
+    <div class="q-label">4.1 &nbsp;·&nbsp; Working Together</div>
+    <div class="q-text">How easy is it to actually work with me, week to week?</div>
+    <div class="score-wrap">
+      <div class="score-scale" data-id="score-4">
+        <button class="score-btn" data-val="0">0</button>
+        <button class="score-btn" data-val="1">1</button>
+        <button class="score-btn" data-val="2">2</button>
+        <button class="score-btn" data-val="3">3</button>
+        <button class="score-btn" data-val="4">4</button>
+        <button class="score-btn" data-val="5">5</button>
+      </div>
+      <div class="score-anchors">
+        <span class="left">0 = Constant friction</span>
+        <span class="mid">3 = Workable, minor frustrations</span>
+        <span class="right">5 = Smoothest creative collaboration I have had</span>
+      </div>
+    </div>
+    <div class="sub-trigger" id="sub-score-4">
+      <div class="sub-label">What is the one friction point we should fix?</div>
+      <textarea id="q-4-1-sub" placeholder="The thing that would save me real time or stress is..." rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- 4.2 -->
+  <div class="q-block">
+    <div class="q-label">4.2 &nbsp;·&nbsp; The Difference</div>
+    <div class="q-text">What is one thing about how I work that is different from what you expected from a social media agency?</div>
+    <textarea id="q-4-2" placeholder="I expected someone who would just... but instead you..." rows="3"></textarea>
+  </div>
+
+  <hr>
+
+  <!-- ===== PART 5: OUTCOME & QUOTE ===== -->
+  <div class="section-header sh-green">
+    <div class="section-num">05</div>
+    <div class="section-text">
+      <h3>The Outcome &amp; The Quote</h3>
+      <p>What has shifted, and what you would tell another founder</p>
+    </div>
+  </div>
+
+  <!-- 5.1 -->
+  <div class="q-block">
+    <div class="q-label">5.1 &nbsp;·&nbsp; What Has Shifted</div>
+    <div class="q-text">Since we started working together, which of these have shifted for you? Pick all that apply.</div>
+    <div class="options-list" data-multi="true" id="opts-5-1">
+      <div class="option-row" data-val="brand"><div class="checkbox"></div><div class="opt-text">I have a clearer sense of what my brand stands for</div></div>
+      <div class="option-row" data-val="confidence"><div class="checkbox"></div><div class="opt-text">I can talk about my work with more confidence</div></div>
+      <div class="option-row" data-val="consistency"><div class="checkbox"></div><div class="opt-text">I post more consistently</div></div>
+      <div class="option-row" data-val="inquiries"><div class="checkbox"></div><div class="opt-text">I have started attracting better-fit inquiries</div></div>
+      <div class="option-row" data-val="anxiety"><div class="checkbox"></div><div class="opt-text">I feel less anxious about social media</div></div>
+      <div class="option-row" data-val="noticed"><div class="checkbox"></div><div class="opt-text">My existing clients have noticed a change</div></div>
+      <div class="option-row" data-val="closed"><div class="checkbox"></div><div class="opt-text">I have closed at least one client I would not have closed before</div></div>
+      <div class="option-row" data-val="proud"><div class="checkbox"></div><div class="opt-text">I finally have a brand I am proud to send people to</div></div>
+      <div class="option-row" data-val="comparison"><div class="checkbox"></div><div class="opt-text">I no longer compare myself to other studios in my space</div></div>
+      <div class="option-row" data-val="other"><div class="checkbox"></div><div class="opt-text">Other</div></div>
+    </div>
+    <div class="option-other-input" id="other-5-1"><input type="text" id="q-5-1-other" placeholder="Add your own shift..."></div>
+  </div>
+
+  <!-- 5.2 -->
+  <div class="q-block">
+    <div class="q-label">5.2 &nbsp;·&nbsp; The Comparison</div>
+    <div class="q-text">Finish this sentence in one breath:</div>
+    <div class="q-note">"The biggest difference between working with Alex and what I tried before is..."</div>
+    <textarea id="q-5-2" placeholder="..." rows="3"></textarea>
+  </div>
+
+  <!-- 5.3 -->
+  <div class="q-block">
+    <div class="q-label">5.3 &nbsp;·&nbsp; The Recommendation</div>
+    <div class="q-text">If a fellow founder asked whether to hire me, what would you tell them, in two sentences or less?</div>
+    <textarea id="q-5-3" placeholder="Honestly, you should hire him because..." rows="3"></textarea>
+  </div>
+
+  <!-- 5.4 -->
+  <div class="q-block">
+    <div class="q-label">5.4 &nbsp;·&nbsp; Quote Permission</div>
+    <div class="q-text">Anything you wrote here, can I quote it in proposals or on my website?</div>
+    <div class="options-list" data-multi="false" id="opts-5-4">
+      <div class="option-row" data-val="full"><div class="checkbox"></div><div class="opt-text">Yes, with my name and brand attached</div></div>
+      <div class="option-row" data-val="firstname"><div class="checkbox"></div><div class="opt-text">Yes, with my first name only</div></div>
+      <div class="option-row" data-val="anon"><div class="checkbox"></div><div class="opt-text">Yes, anonymously (e.g. "a hospitality brand founder")</div></div>
+      <div class="option-row" data-val="later"><div class="checkbox"></div><div class="opt-text">Not yet, ask me again in a couple of months</div></div>
+      <div class="option-row" data-val="no"><div class="checkbox"></div><div class="opt-text">No, please keep this private</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ===== PART 6: NEXT MONTH ===== -->
+  <div class="section-header sh-navy">
+    <div class="section-num">06</div>
+    <div class="section-text">
+      <h3>Next Month</h3>
+      <p>One priority. One thing I should know.</p>
+    </div>
+  </div>
+
+  <!-- 6.1 -->
+  <div class="q-block">
+    <div class="q-label">6.1 &nbsp;·&nbsp; The Priority</div>
+    <div class="q-text">If next month could focus on just one thing for you, what would it be?</div>
+    <textarea id="q-6-1" placeholder="The thing that would matter most is..." rows="3"></textarea>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="export-section">
+    <h3>Done? Send your answers to Alex.</h3>
+    <p>Click below. A small file with all your answers will download. Send it via WhatsApp or email and I will have everything I need to build next month around what matters to you.</p>
+    <button class="btn-export" onclick="exportCSV()">Download my answers</button>
+  </div>
+
+  <div class="doc-footer">
+    <span>Alex Rod Socials &nbsp;·&nbsp; Client Feedback &nbsp;·&nbsp; <span id="fClientName">[Client Name]</span></span>
+    <span>Prepared by Alex Rod</span>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Answers downloaded. Send the file to Alex.</div>
+
+<script>
+  /* ===== CLIENT NAME / MONTH (edit these two strings per client) ===== */
+  const CLIENT_NAME = "[Client Name]";
+  const MONTH_LABEL = "[Month / Year]";
+  document.getElementById('hClientName').textContent = CLIENT_NAME;
+  document.getElementById('fClientName').textContent = CLIENT_NAME;
+  document.getElementById('hMonth').textContent = MONTH_LABEL;
+
+  /* ===== SCORE BUTTONS ===== */
+  document.querySelectorAll('.score-scale').forEach(scale => {
+    const id = scale.dataset.id;
+    scale.querySelectorAll('.score-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        scale.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const val = parseInt(btn.dataset.val);
+        const sub = document.getElementById('sub-' + id);
+        if (sub) {
+          if (val < 5) sub.classList.add('visible');
+          else sub.classList.remove('visible');
+        }
+        updateProgress();
+      });
+    });
+  });
+
+  /* ===== MULTI-SELECT OPTION ROWS ===== */
+  document.querySelectorAll('.options-list').forEach(list => {
+    const multi = list.dataset.multi === 'true';
+    const max = list.dataset.max ? parseInt(list.dataset.max) : Infinity;
+    list.querySelectorAll('.option-row').forEach(row => {
+      row.addEventListener('click', () => {
+        if (!multi) {
+          list.querySelectorAll('.option-row').forEach(r => r.classList.remove('selected'));
+          row.classList.add('selected');
+        } else {
+          const isSelected = row.classList.contains('selected');
+          if (isSelected) {
+            row.classList.remove('selected');
+          } else {
+            const currentCount = list.querySelectorAll('.option-row.selected').length;
+            if (currentCount < max) row.classList.add('selected');
+          }
+        }
+        // toggle "other" input field
+        const otherId = 'other-' + list.id.replace('opts-', '');
+        const otherDiv = document.getElementById(otherId);
+        if (otherDiv) {
+          const otherSelected = list.querySelector('.option-row[data-val="other"]')?.classList.contains('selected');
+          if (otherSelected) otherDiv.classList.add('visible');
+          else otherDiv.classList.remove('visible');
+        }
+        updateProgress();
+      });
+    });
+  });
+
+  /* ===== PILL SELECTOR (for context vs craft) ===== */
+  document.querySelectorAll('.pill-wrap').forEach(wrap => {
+    wrap.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        wrap.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        updateProgress();
+      });
+    });
+  });
+
+  /* ===== TEXTAREA / INPUT TRACKING ===== */
+  document.querySelectorAll('textarea, input[type=text]').forEach(el => {
+    el.addEventListener('input', updateProgress);
+  });
+
+  /* ===== PROGRESS BAR ===== */
+  function updateProgress() {
+    const totals = 13;
+    let done = 0;
+    if (document.getElementById('q-1-1').value.trim()) done++;
+    if (document.querySelector('#opts-1-2 .option-row.selected')) done++;
+    if (document.querySelector('.score-scale[data-id="score-1"] .score-btn.selected')) done++;
+    if (document.getElementById('q-2-2').value.trim()) done++;
+    if (document.querySelector('#opts-2-3 .option-row.selected')) done++;
+    if (document.querySelector('.score-scale[data-id="score-2"] .score-btn.selected')) done++;
+    if (document.querySelector('.score-scale[data-id="score-3"] .score-btn.selected')) done++;
+    if (document.querySelector('#opts-3-3-up .option-row.selected') || document.querySelector('#opts-3-3-down .option-row.selected')) done++;
+    if (document.querySelector('.score-scale[data-id="score-4"] .score-btn.selected')) done++;
+    if (document.getElementById('q-4-2').value.trim()) done++;
+    if (document.querySelector('#opts-5-1 .option-row.selected')) done++;
+    if (document.getElementById('q-5-2').value.trim() || document.getElementById('q-5-3').value.trim()) done++;
+    if (document.querySelector('#opts-5-4 .option-row.selected')) done++;
+    document.getElementById('progressBar').style.width = Math.round((done / totals) * 100) + '%';
+  }
+
+  /* ===== CSV EXPORT ===== */
+  function getScore(id) {
+    const sel = document.querySelector(`.score-scale[data-id="${id}"] .score-btn.selected`);
+    return sel ? sel.dataset.val : '';
+  }
+  function getText(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+  function getMulti(listId) {
+    const sels = document.querySelectorAll(`#${listId} .option-row.selected`);
+    return Array.from(sels).map(r => r.dataset.val).join('; ');
+  }
+  function getPill(wrapId) {
+    const sel = document.querySelector(`#${wrapId} .pill.selected`);
+    return sel ? sel.dataset.val : '';
+  }
+  function csvEscape(str) {
+    str = String(str ?? '').replace(/"/g, '""');
+    return `"${str}"`;
+  }
+
+  function exportCSV() {
+    const rows = [
+      ['Section', 'Question', 'Answer'],
+      ['Meta', 'Client', CLIENT_NAME],
+      ['Meta', 'Month', MONTH_LABEL],
+      ['1. Starting Point', '1.1 The Decision', getText('q-1-1')],
+      ['1. Starting Point', '1.2 Why Me (selected)', getMulti('opts-1-2')],
+      ['1. Starting Point', '1.2 Why Me (other text)', getText('q-1-2-other')],
+      ['1. Starting Point', '1.2 Why Me (one sentence)', getText('q-1-2-sentence')],
+      ['2. Strategy', '2.1 Clarity score (0-5)', getScore('score-1')],
+      ['2. Strategy', '2.1 What would make this a 5', getText('q-2-1-sub')],
+      ['2. Strategy', '2.2 Decision Test', getText('q-2-2')],
+      ['2. Strategy', '2.3 Naming What We Built (selected)', getMulti('opts-2-3')],
+      ['2. Strategy', '2.3 Other phrase', getText('q-2-3-other')],
+      ['3. Execution', '3.1 Quality score (0-5)', getScore('score-2')],
+      ['3. Execution', '3.1 What is missing for a 5', getText('q-3-1-sub')],
+      ['3. Execution', '3.2 Voice score (0-5)', getScore('score-3')],
+      ['3. Execution', '3.2 Voice cause (context/craft/both)', getPill('pills-3-2')],
+      ['3. Execution', '3.2 Specific phrase or post', getText('q-3-2-sub')],
+      ['3. Execution', '3.3 Dial UP', getMulti('opts-3-3-up')],
+      ['3. Execution', '3.3 Dial DOWN', getMulti('opts-3-3-down')],
+      ['4. Collaboration', '4.1 Working Together score (0-5)', getScore('score-4')],
+      ['4. Collaboration', '4.1 Friction to fix', getText('q-4-1-sub')],
+      ['4. Collaboration', '4.2 The Difference', getText('q-4-2')],
+      ['5. Outcome & Quote', '5.1 What has shifted (selected)', getMulti('opts-5-1')],
+      ['5. Outcome & Quote', '5.1 Other shift', getText('q-5-1-other')],
+      ['5. Outcome & Quote', '5.2 Comparison sentence', getText('q-5-2')],
+      ['5. Outcome & Quote', '5.3 Recommendation', getText('q-5-3')],
+      ['5. Outcome & Quote', '5.4 Quote permission', getMulti('opts-5-4')],
+      ['6. Next Month', '6.1 The Priority', getText('q-6-1')],
+    ];
+    const csv = rows.map(r => r.map(csvEscape).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const safeName = CLIENT_NAME.replace(/[^a-z0-9]/gi, '_');
+    const safeMonth = MONTH_LABEL.replace(/[^a-z0-9]/gi, '_');
+    a.download = `Feedback_${safeName}_${safeMonth}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>

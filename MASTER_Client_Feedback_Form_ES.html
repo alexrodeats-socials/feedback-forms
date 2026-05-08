@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback de Cliente · Alex Rod Socials</title>
+<style>
+  :root {
+    --black:   #0F0F0F;
+    --offblk:  #1A1A1A;
+    --dkgrey:  #242424;
+    --mdgrey:  #2E2E2E;
+    --lgrey:   #454545;
+    --mgrey:   #6B6B6B;
+    --fgrey:   #AAAAAA;
+    --cream:   #E8E0D0;
+    --white:   #FFFFFF;
+    --green:   #2C3E2D;
+    --greenl:  #4A7A4B;
+    --greenhl: #D4EDD4;
+    --navy:    #1C2B3A;
+    --earth:   #3A2C1C;
+    --gold:    #C9993A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--black); }
+  body {
+    font-family: 'Arial', sans-serif;
+    background: var(--black);
+    color: var(--fgrey);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .doc-header {
+    background: var(--offblk);
+    border-bottom: 1px solid #2A2A2A;
+    padding: 24px 0 18px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .doc-header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--mgrey);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .doc-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.5px;
+  }
+  .progress-bar-wrap {
+    width: 100%;
+    height: 3px;
+    background: var(--dkgrey);
+    position: absolute;
+    bottom: 0; left: 0;
+  }
+  .progress-bar {
+    height: 3px;
+    background: var(--greenl);
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 50px 24px 100px;
+  }
+
+  .cover {
+    padding: 40px 0 50px;
+    border-bottom: 1px solid #222;
+    margin-bottom: 50px;
+  }
+  .cover .tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--mgrey);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .cover h2 {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 22px;
+    letter-spacing: -0.5px;
+  }
+  .cover p {
+    font-size: 15px;
+    color: var(--fgrey);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .cover .meta {
+    margin-top: 28px;
+    font-size: 13px;
+    color: var(--mgrey);
+  }
+  .cover .meta strong { color: var(--cream); font-weight: 600; }
+
+  .section-header {
+    display: flex;
+    align-items: stretch;
+    margin: 56px 0 28px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .section-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    flex-shrink: 0;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--cream);
+  }
+  .section-text { padding: 16px 20px; }
+  .section-text h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 3px;
+  }
+  .section-text p {
+    font-size: 13px;
+    color: rgba(232,224,208,0.6);
+  }
+  .sh-green  .section-num { background: #1E2E1E; }
+  .sh-green  { background: var(--green); }
+  .sh-navy   .section-num { background: #121E28; }
+  .sh-navy   { background: var(--navy); }
+  .sh-earth  .section-num { background: #291E10; }
+  .sh-earth  { background: var(--earth); }
+  .sh-dark   .section-num { background: #1A1A1A; }
+  .sh-dark   { background: var(--mdgrey); }
+
+  .q-block { margin-bottom: 42px; }
+  .q-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--mgrey);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+  .q-note {
+    font-size: 13px;
+    color: var(--mgrey);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  .score-wrap { margin-bottom: 8px; }
+  .score-scale {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .score-btn {
+    flex: 1;
+    aspect-ratio: 1;
+    max-width: 56px;
+    background: var(--mdgrey);
+    border: 1px solid var(--lgrey);
+    color: var(--mgrey);
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .score-btn:hover {
+    background: var(--lgrey);
+    color: var(--cream);
+    border-color: var(--mgrey);
+  }
+  .score-btn.selected {
+    background: var(--greenl);
+    border-color: var(--greenl);
+    color: white;
+    box-shadow: 0 0 0 2px rgba(74,122,75,0.3);
+  }
+  .score-anchors {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--mgrey);
+    padding: 0 2px;
+    gap: 12px;
+  }
+  .score-anchors .left  { text-align: left; max-width: 32%; }
+  .score-anchors .mid   { text-align: center; max-width: 32%; }
+  .score-anchors .right { text-align: right; max-width: 32%; color: var(--greenhl); font-style: italic; }
+
+  textarea, input[type=text] {
+    width: 100%;
+    background: var(--dkgrey);
+    border: 1px solid var(--lgrey);
+    border-radius: 3px;
+    color: var(--cream);
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 12px 14px;
+    resize: vertical;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  textarea { min-height: 90px; }
+  textarea::placeholder, input::placeholder { color: var(--lgrey); font-style: italic; }
+  textarea:focus, input:focus { border-color: var(--greenl); }
+
+  .sub-trigger {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: rgba(74,122,75,0.06);
+    border-left: 3px solid var(--greenl);
+    border-radius: 0 3px 3px 0;
+    display: none;
+  }
+  .sub-trigger.visible { display: block; }
+  .sub-trigger .sub-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--greenl);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .sub-trigger .pill-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .pill {
+    background: var(--mdgrey);
+    border: 1px solid var(--lgrey);
+    color: var(--fgrey);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Arial', sans-serif;
+  }
+  .pill:hover { border-color: var(--greenl); color: var(--cream); }
+  .pill.selected {
+    background: var(--greenl);
+    border-color: var(--greenl);
+    color: white;
+  }
+
+  .options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .option-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--dkgrey);
+    border: 1px solid var(--lgrey);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .option-row:hover {
+    border-color: var(--mgrey);
+    background: var(--mdgrey);
+  }
+  .option-row.selected {
+    border-color: var(--greenl);
+    background: rgba(74,122,75,0.1);
+  }
+  .option-row .checkbox {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--lgrey);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .option-row.selected .checkbox {
+    background: var(--greenl);
+    border-color: var(--greenl);
+  }
+  .option-row.selected .checkbox::after {
+    content: '✓';
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .option-row .opt-text {
+    color: var(--cream);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .option-other-input {
+    margin-top: 8px;
+    display: none;
+  }
+  .option-other-input.visible { display: block; }
+
+  .paired-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .paired-col h4 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--cream);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .paired-col.up h4 { color: var(--greenhl); }
+  .paired-col.down h4 { color: var(--gold); }
+
+  hr {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 40px 0;
+  }
+
+  .export-section {
+    background: var(--dkgrey);
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding: 36px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  .export-section h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .export-section p {
+    font-size: 14px;
+    color: var(--mgrey);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .btn-export {
+    background: var(--greenl);
+    color: white;
+    border: none;
+    padding: 14px 36px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.2s;
+  }
+  .btn-export:hover { background: #3D6B3E; }
+  .btn-export:active { transform: scale(0.98); }
+
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--greenl);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .doc-footer {
+    border-top: 1px solid #222;
+    margin-top: 50px;
+    padding-top: 22px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--mgrey);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .cover h2 { font-size: 30px; }
+    .score-btn { font-size: 14px; }
+    .section-num { width: 48px; font-size: 22px; }
+    .export-section { padding: 24px 18px; }
+    .paired-wrap { grid-template-columns: 1fr; }
+    .score-anchors { flex-direction: column; gap: 4px; }
+    .score-anchors .left, .score-anchors .mid, .score-anchors .right { max-width: 100%; text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <div class="eyebrow">Alex Rod Socials &nbsp;·&nbsp; Feedback de Cliente</div>
+  <h1>Feedback Mensual &nbsp;·&nbsp; <span id="hClientName">[Nombre Cliente]</span></h1>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+</div>
+
+<div class="wrap">
+
+  <!-- COVER -->
+  <div class="cover">
+    <span class="tag" id="hMonth">[Mes / Año]</span>
+    <h2>Tu feedback<br>define lo que viene.</h2>
+    <p>Trece preguntas cortas. La mayoría son tap para responder. Las pocas que son abiertas tienen una frase de inicio para que no tengas que pensar tanto en cómo empezar.</p>
+    <p>El objetivo es simple. Cuéntame qué está funcionando, qué no, y qué le dirías a otra persona sobre la experiencia. Uso tus respuestas para rediseñar el próximo mes alrededor de lo que de verdad te importa.</p>
+    <div class="meta">
+      <strong>Tiempo estimado:</strong> 7 minutos &nbsp;·&nbsp; <strong>Guardar:</strong> Haz clic en "Descargar mis respuestas" al final.
+    </div>
+  </div>
+
+  <!-- ===== PARTE 1: EL PUNTO DE PARTIDA ===== -->
+  <div class="section-header sh-green">
+    <div class="section-num">01</div>
+    <div class="section-text">
+      <h3>El Punto de Partida</h3>
+      <p>Dónde estabas antes, y por qué me elegiste a mí</p>
+    </div>
+  </div>
+
+  <!-- 1.1 -->
+  <div class="q-block">
+    <div class="q-label">1.1 &nbsp;·&nbsp; La Decisión</div>
+    <div class="q-text">¿Qué te hizo finalmente contratar a alguien para tus redes, y por qué ahora?</div>
+    <textarea id="q-1-1" placeholder="Lo intenté por mi cuenta durante X meses y lo que me hizo decidirme fue..." rows="3"></textarea>
+  </div>
+
+  <!-- 1.2 -->
+  <div class="q-block">
+    <div class="q-label">1.2 &nbsp;·&nbsp; Por Qué a Mí Específicamente</div>
+    <div class="q-text">¿Qué te hizo elegirme a mí sobre las alternativas? Marca todo lo que aplique.</div>
+    <div class="options-list" data-multi="true" id="opts-1-2">
+      <div class="option-row" data-val="strategy"><div class="checkbox"></div><div class="opt-text">Eras el único que lideraba con estrategia, no con entregables</div></div>
+      <div class="option-row" data-val="premium"><div class="checkbox"></div><div class="opt-text">El trabajo se sentía premium sin ser frío</div></div>
+      <div class="option-row" data-val="industry"><div class="checkbox"></div><div class="opt-text">Confié en que entenderías mi mundo de verdad</div></div>
+      <div class="option-row" data-val="diagnosed"><div class="checkbox"></div><div class="opt-text">Diagnosticaste qué estaba mal en mi setup, los demás solo me vendían paquetes</div></div>
+      <div class="option-row" data-val="pricing"><div class="checkbox"></div><div class="opt-text">El precio se sentía accesible comparado con agencias</div></div>
+      <div class="option-row" data-val="referral"><div class="checkbox"></div><div class="opt-text">Recomendación personal</div></div>
+      <div class="option-row" data-val="other"><div class="checkbox"></div><div class="opt-text">Otro</div></div>
+    </div>
+    <div class="option-other-input" id="other-1-2"><input type="text" id="q-1-2-other" placeholder="Cuéntame qué hizo la diferencia..."></div>
+    <div style="margin-top: 16px;">
+      <input type="text" id="q-1-2-sentence" placeholder="En una frase: ¿qué es lo que hace mi forma de trabajar diferente y que marcó la decisión?">
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ===== PARTE 2: ESTRATEGIA ===== -->
+  <div class="section-header sh-navy">
+    <div class="section-num">02</div>
+    <div class="section-text">
+      <h3>La Estrategia</h3>
+      <p>Cómo está aterrizando la dirección que construimos</p>
+    </div>
+  </div>
+
+  <!-- 2.1 -->
+  <div class="q-block">
+    <div class="q-label">2.1 &nbsp;·&nbsp; Claridad, antes vs. ahora</div>
+    <div class="q-text">Comparado con antes de trabajar juntos, ¿qué tan clara es tu dirección ahora?</div>
+    <div class="score-wrap">
+      <div class="score-scale" data-id="score-1">
+        <button class="score-btn" data-val="0">0</button>
+        <button class="score-btn" data-val="1">1</button>
+        <button class="score-btn" data-val="2">2</button>
+        <button class="score-btn" data-val="3">3</button>
+        <button class="score-btn" data-val="4">4</button>
+        <button class="score-btn" data-val="5">5</button>
+      </div>
+      <div class="score-anchors">
+        <span class="left">0 = Igual de confuso que antes</span>
+        <span class="mid">3 = Notablemente más claro</span>
+        <span class="right">5 = Por fin sé quién soy</span>
+      </div>
+    </div>
+    <div class="sub-trigger" id="sub-score-1">
+      <div class="sub-label">¿Qué haría falta para que sea un 5?</div>
+      <textarea id="q-2-1-sub" placeholder="La pieza que aún me falta es..." rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- 2.2 -->
+  <div class="q-block">
+    <div class="q-label">2.2 &nbsp;·&nbsp; La Prueba de Decisión</div>
+    <div class="q-text">¿Qué decisión puedes tomar ahora con más rapidez o confianza, gracias al trabajo que hicimos?</div>
+    <textarea id="q-2-2" placeholder="Antes, frente a X me bloqueaba o dudaba. Ahora puedo simplemente..." rows="3"></textarea>
+  </div>
+
+  <!-- 2.3 -->
+  <div class="q-block">
+    <div class="q-label">2.3 &nbsp;·&nbsp; Cómo Llamar a lo que Construimos</div>
+    <div class="q-text">Elige la frase más cercana a lo que construimos juntos. Puedes elegir hasta tres.</div>
+    <div class="options-list" data-multi="true" data-max="3" id="opts-2-3">
+      <div class="option-row" data-val="positioning"><div class="checkbox"></div><div class="opt-text">Un posicionamiento claro que puedo defender</div></div>
+      <div class="option-row" data-val="voice"><div class="checkbox"></div><div class="opt-text">Una voz de marca que reconozco cuando la leo</div></div>
+      <div class="option-row" data-val="foundation"><div class="checkbox"></div><div class="opt-text">Una base estratégica sobre la que puedo construir el resto del negocio</div></div>
+      <div class="option-row" data-val="story"><div class="checkbox"></div><div class="opt-text">La historia que llevaba años intentando contar</div></div>
+      <div class="option-row" data-val="permission"><div class="checkbox"></div><div class="opt-text">Permiso para dejar de cuestionarme</div></div>
+      <div class="option-row" data-val="presence"><div class="checkbox"></div><div class="opt-text">Una presencia premium de la que estoy orgullosa</div></div>
+      <div class="option-row" data-val="other"><div class="checkbox"></div><div class="opt-text">Otra</div></div>
+    </div>
+    <div class="option-other-input" id="other-2-3"><input type="text" id="q-2-3-other" placeholder="Tu frase..."></div>
+  </div>
+
+  <hr>
+
+  <!-- ===== PARTE 3: EJECUCIÓN ===== -->
+  <div class="section-header sh-earth">
+    <div class="section-num">03</div>
+    <div class="section-text">
+      <h3>La Ejecución</h3>
+      <p>El trabajo real entregado este mes</p>
+    </div>
+  </div>
+
+  <!-- 3.1 -->
+  <div class="q-block">
+    <div class="q-label">3.1 &nbsp;·&nbsp; La Calidad</div>
+    <div class="q-text">Mirando el trabajo entregado este mes, ¿cómo calificarías la calidad?</div>
+    <div class="score-wrap">
+      <div class="score-scale" data-id="score-2">
+        <button class="score-btn" data-val="0">0</button>
+        <button class="score-btn" data-val="1">1</button>
+        <button class="score-btn" data-val="2">2</button>
+        <button class="score-btn" data-val="3">3</button>
+        <button class="score-btn" data-val="4">4</button>
+        <button class="score-btn" data-val="5">5</button>
+      </div>
+      <div class="score-anchors">
+        <span class="left">0 = Por debajo de lo que aceptaría</span>
+        <span class="mid">3 = Sólido, cumple</span>
+        <span class="right">5 = Mejor de lo que imaginaba que la marca podía verse</span>
+      </div>
+    </div>
+    <div class="sub-trigger" id="sub-score-2">
+      <div class="sub-label">¿Qué le falta para ser un 5?</div>
+      <textarea id="q-3-1-sub" placeholder="El gap es..." rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- 3.2 -->
+  <div class="q-block">
+    <div class="q-label">3.2 &nbsp;·&nbsp; La Voz</div>
+    <div class="q-text">Cuando lees los captions en voz alta, ¿qué tanto suenan a ti?</div>
+    <div class="score-wrap">
+      <div class="score-scale" data-id="score-3">
+        <button class="score-btn" data-val="0">0</button>
+        <button class="score-btn" data-val="1">1</button>
+        <button class="score-btn" data-val="2">2</button>
+        <button class="score-btn" data-val="3">3</button>
+        <button class="score-btn" data-val="4">4</button>
+        <button class="score-btn" data-val="5">5</button>
+      </div>
+      <div class="score-anchors">
+        <span class="left">0 = No soy yo para nada</span>
+        <span class="mid">3 = Cerca, pero yo lo diría diferente</span>
+        <span class="right">5 = Así es exactamente como yo lo diría</span>
+      </div>
+    </div>
+    <div class="sub-trigger" id="sub-score-3">
+      <div class="sub-label">¿Es un problema de contexto o de escritura?</div>
+      <div class="pill-wrap" id="pills-3-2">
+        <div class="pill" data-val="context">Contexto: aún no le había dado a Alex suficiente información</div>
+        <div class="pill" data-val="craft">Escritura: el texto no coincidió con cómo hablo</div>
+        <div class="pill" data-val="both">Ambos</div>
+      </div>
+      <textarea id="q-3-2-sub" placeholder="Una frase o post específico donde se notó..." rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- 3.3 -->
+  <div class="q-block">
+    <div class="q-label">3.3 &nbsp;·&nbsp; Subir &nbsp;/&nbsp; Bajar</div>
+    <div class="q-text">Para el próximo mes, ¿dónde debería empujar más, y dónde frenar?</div>
+    <div class="paired-wrap">
+      <div class="paired-col up">
+        <h4>Subir (elige 1 a 2)</h4>
+        <div class="options-list" data-multi="true" data-max="2" id="opts-3-3-up">
+          <div class="option-row" data-val="camera"><div class="checkbox"></div><div class="opt-text">Más de ti en cámara o en los posts</div></div>
+          <div class="option-row" data-val="opinions"><div class="checkbox"></div><div class="opt-text">Opiniones más fuertes y punto de vista</div></div>
+          <div class="option-row" data-val="caseworks"><div class="checkbox"></div><div class="opt-text">Más casos de cliente y portafolio</div></div>
+          <div class="option-row" data-val="process"><div class="checkbox"></div><div class="opt-text">Más proceso y detrás de escena</div></div>
+          <div class="option-row" data-val="polish"><div class="checkbox"></div><div class="opt-text">Más pulido premium</div></div>
+          <div class="option-row" data-val="raw"><div class="checkbox"></div><div class="opt-text">Más crudo, menos pulido</div></div>
+        </div>
+      </div>
+      <div class="paired-col down">
+        <h4>Bajar (elige 0 a 2)</h4>
+        <div class="options-list" data-multi="true" data-max="2" id="opts-3-3-down">
+          <div class="option-row" data-val="camera"><div class="checkbox"></div><div class="opt-text">Menos de mí en cámara</div></div>
+          <div class="option-row" data-val="opinions"><div class="checkbox"></div><div class="opt-text">Contenido menos cargado de opinión</div></div>
+          <div class="option-row" data-val="polish"><div class="checkbox"></div><div class="opt-text">Menos pulido, más espontáneo</div></div>
+          <div class="option-row" data-val="carousels"><div class="checkbox"></div><div class="opt-text">Menos carruseles, más posts simples</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ===== PARTE 4: COLABORACIÓN ===== -->
+  <div class="section-header sh-dark">
+    <div class="section-num">04</div>
+    <div class="section-text">
+      <h3>La Colaboración</h3>
+      <p>Cómo está yendo trabajar juntos</p>
+    </div>
+  </div>
+
+  <!-- 4.1 -->
+  <div class="q-block">
+    <div class="q-label">4.1 &nbsp;·&nbsp; Trabajar Juntos</div>
+    <div class="q-text">¿Qué tan fácil es trabajar conmigo, semana a semana?</div>
+    <div class="score-wrap">
+      <div class="score-scale" data-id="score-4">
+        <button class="score-btn" data-val="0">0</button>
+        <button class="score-btn" data-val="1">1</button>
+        <button class="score-btn" data-val="2">2</button>
+        <button class="score-btn" data-val="3">3</button>
+        <button class="score-btn" data-val="4">4</button>
+        <button class="score-btn" data-val="5">5</button>
+      </div>
+      <div class="score-anchors">
+        <span class="left">0 = Fricción constante</span>
+        <span class="mid">3 = Funciona, frustraciones menores</span>
+        <span class="right">5 = La colaboración creativa más fluida que he tenido</span>
+      </div>
+    </div>
+    <div class="sub-trigger" id="sub-score-4">
+      <div class="sub-label">¿Cuál es el punto de fricción que deberíamos arreglar?</div>
+      <textarea id="q-4-1-sub" placeholder="Lo que me ahorraría tiempo o estrés real es..." rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- 4.2 -->
+  <div class="q-block">
+    <div class="q-label">4.2 &nbsp;·&nbsp; La Diferencia</div>
+    <div class="q-text">¿Qué hay en mi forma de trabajar que es distinto a lo que esperabas de una agencia de redes sociales?</div>
+    <textarea id="q-4-2" placeholder="Esperaba a alguien que solo... pero en cambio tú..." rows="3"></textarea>
+  </div>
+
+  <hr>
+
+  <!-- ===== PARTE 5: RESULTADO Y CITA ===== -->
+  <div class="section-header sh-green">
+    <div class="section-num">05</div>
+    <div class="section-text">
+      <h3>El Resultado y Tu Voz</h3>
+      <p>Qué ha cambiado, y qué le dirías a otra persona</p>
+    </div>
+  </div>
+
+  <!-- 5.1 -->
+  <div class="q-block">
+    <div class="q-label">5.1 &nbsp;·&nbsp; Qué Ha Cambiado</div>
+    <div class="q-text">Desde que empezamos a trabajar juntos, ¿cuáles de estos cambios has notado? Marca todos los que apliquen.</div>
+    <div class="options-list" data-multi="true" id="opts-5-1">
+      <div class="option-row" data-val="brand"><div class="checkbox"></div><div class="opt-text">Tengo una idea más clara de lo que mi marca representa</div></div>
+      <div class="option-row" data-val="confidence"><div class="checkbox"></div><div class="opt-text">Puedo hablar de mi trabajo con más confianza</div></div>
+      <div class="option-row" data-val="consistency"><div class="checkbox"></div><div class="opt-text">Publico con más consistencia</div></div>
+      <div class="option-row" data-val="inquiries"><div class="checkbox"></div><div class="opt-text">He empezado a atraer consultas mejor alineadas</div></div>
+      <div class="option-row" data-val="anxiety"><div class="checkbox"></div><div class="opt-text">Siento menos ansiedad con las redes sociales</div></div>
+      <div class="option-row" data-val="noticed"><div class="checkbox"></div><div class="opt-text">Mis clientes actuales han notado el cambio</div></div>
+      <div class="option-row" data-val="closed"><div class="checkbox"></div><div class="opt-text">He cerrado al menos un cliente que antes no habría cerrado</div></div>
+      <div class="option-row" data-val="proud"><div class="checkbox"></div><div class="opt-text">Por fin tengo una marca a la que estoy orgullosa de mandar a la gente</div></div>
+      <div class="option-row" data-val="comparison"><div class="checkbox"></div><div class="opt-text">Ya no me comparo con otros estudios en mi espacio</div></div>
+      <div class="option-row" data-val="other"><div class="checkbox"></div><div class="opt-text">Otro</div></div>
+    </div>
+    <div class="option-other-input" id="other-5-1"><input type="text" id="q-5-1-other" placeholder="Añade tu propio cambio..."></div>
+  </div>
+
+  <!-- 5.2 -->
+  <div class="q-block">
+    <div class="q-label">5.2 &nbsp;·&nbsp; La Comparación</div>
+    <div class="q-text">Termina esta frase de un solo respiro:</div>
+    <div class="q-note">"La mayor diferencia entre trabajar con Alex y lo que intenté antes es..."</div>
+    <textarea id="q-5-2" placeholder="..." rows="3"></textarea>
+  </div>
+
+  <!-- 5.3 -->
+  <div class="q-block">
+    <div class="q-label">5.3 &nbsp;·&nbsp; La Recomendación</div>
+    <div class="q-text">Si otra persona te preguntara si contratarme, ¿qué le dirías en dos frases o menos?</div>
+    <textarea id="q-5-3" placeholder="Honestamente, deberías contratarlo porque..." rows="3"></textarea>
+  </div>
+
+  <!-- 5.4 -->
+  <div class="q-block">
+    <div class="q-label">5.4 &nbsp;·&nbsp; Permiso de Cita</div>
+    <div class="q-text">Lo que escribiste aquí, ¿puedo citarlo en propuestas o en mi web?</div>
+    <div class="options-list" data-multi="false" id="opts-5-4">
+      <div class="option-row" data-val="full"><div class="checkbox"></div><div class="opt-text">Sí, con mi nombre y marca</div></div>
+      <div class="option-row" data-val="firstname"><div class="checkbox"></div><div class="opt-text">Sí, solo con mi nombre</div></div>
+      <div class="option-row" data-val="anon"><div class="checkbox"></div><div class="opt-text">Sí, anónimamente (ej. "una fundadora del sector hospitality")</div></div>
+      <div class="option-row" data-val="later"><div class="checkbox"></div><div class="opt-text">Aún no, pregúntame en un par de meses</div></div>
+      <div class="option-row" data-val="no"><div class="checkbox"></div><div class="opt-text">No, mantenlo privado</div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ===== PARTE 6: PRÓXIMO MES ===== -->
+  <div class="section-header sh-navy">
+    <div class="section-num">06</div>
+    <div class="section-text">
+      <h3>El Próximo Mes</h3>
+      <p>Una prioridad. Una cosa que debería saber.</p>
+    </div>
+  </div>
+
+  <!-- 6.1 -->
+  <div class="q-block">
+    <div class="q-label">6.1 &nbsp;·&nbsp; La Prioridad</div>
+    <div class="q-text">Si el próximo mes pudiera enfocarse en una sola cosa para ti, ¿cuál sería?</div>
+    <textarea id="q-6-1" placeholder="Lo que más me importaría es..." rows="3"></textarea>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="export-section">
+    <h3>¿Listo? Envíame tus respuestas.</h3>
+    <p>Haz clic abajo. Se descargará un archivo pequeño con todas tus respuestas. Mándamelo por WhatsApp o email y tendré todo lo que necesito para construir el próximo mes alrededor de lo que te importa.</p>
+    <button class="btn-export" onclick="exportCSV()">Descargar mis respuestas</button>
+  </div>
+
+  <div class="doc-footer">
+    <span>Alex Rod Socials &nbsp;·&nbsp; Feedback de Cliente &nbsp;·&nbsp; <span id="fClientName">[Nombre Cliente]</span></span>
+    <span>Preparado por Alex Rod</span>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Respuestas descargadas. Envíame el archivo.</div>
+
+<script>
+  /* ===== NOMBRE DEL CLIENTE / MES (edita estas dos líneas por cliente) ===== */
+  const CLIENT_NAME = "[Nombre Cliente]";
+  const MONTH_LABEL = "[Mes / Año]";
+  document.getElementById('hClientName').textContent = CLIENT_NAME;
+  document.getElementById('fClientName').textContent = CLIENT_NAME;
+  document.getElementById('hMonth').textContent = MONTH_LABEL;
+
+  /* ===== BOTONES DE PUNTUACIÓN ===== */
+  document.querySelectorAll('.score-scale').forEach(scale => {
+    const id = scale.dataset.id;
+    scale.querySelectorAll('.score-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        scale.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const val = parseInt(btn.dataset.val);
+        const sub = document.getElementById('sub-' + id);
+        if (sub) {
+          if (val < 5) sub.classList.add('visible');
+          else sub.classList.remove('visible');
+        }
+        updateProgress();
+      });
+    });
+  });
+
+  /* ===== MULTI-SELECCIÓN ===== */
+  document.querySelectorAll('.options-list').forEach(list => {
+    const multi = list.dataset.multi === 'true';
+    const max = list.dataset.max ? parseInt(list.dataset.max) : Infinity;
+    list.querySelectorAll('.option-row').forEach(row => {
+      row.addEventListener('click', () => {
+        if (!multi) {
+          list.querySelectorAll('.option-row').forEach(r => r.classList.remove('selected'));
+          row.classList.add('selected');
+        } else {
+          const isSelected = row.classList.contains('selected');
+          if (isSelected) {
+            row.classList.remove('selected');
+          } else {
+            const currentCount = list.querySelectorAll('.option-row.selected').length;
+            if (currentCount < max) row.classList.add('selected');
+          }
+        }
+        const otherId = 'other-' + list.id.replace('opts-', '');
+        const otherDiv = document.getElementById(otherId);
+        if (otherDiv) {
+          const otherSelected = list.querySelector('.option-row[data-val="other"]')?.classList.contains('selected');
+          if (otherSelected) otherDiv.classList.add('visible');
+          else otherDiv.classList.remove('visible');
+        }
+        updateProgress();
+      });
+    });
+  });
+
+  /* ===== PILDORAS ===== */
+  document.querySelectorAll('.pill-wrap').forEach(wrap => {
+    wrap.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        wrap.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        updateProgress();
+      });
+    });
+  });
+
+  document.querySelectorAll('textarea, input[type=text]').forEach(el => {
+    el.addEventListener('input', updateProgress);
+  });
+
+  function updateProgress() {
+    const totals = 13;
+    let done = 0;
+    if (document.getElementById('q-1-1').value.trim()) done++;
+    if (document.querySelector('#opts-1-2 .option-row.selected')) done++;
+    if (document.querySelector('.score-scale[data-id="score-1"] .score-btn.selected')) done++;
+    if (document.getElementById('q-2-2').value.trim()) done++;
+    if (document.querySelector('#opts-2-3 .option-row.selected')) done++;
+    if (document.querySelector('.score-scale[data-id="score-2"] .score-btn.selected')) done++;
+    if (document.querySelector('.score-scale[data-id="score-3"] .score-btn.selected')) done++;
+    if (document.querySelector('#opts-3-3-up .option-row.selected') || document.querySelector('#opts-3-3-down .option-row.selected')) done++;
+    if (document.querySelector('.score-scale[data-id="score-4"] .score-btn.selected')) done++;
+    if (document.getElementById('q-4-2').value.trim()) done++;
+    if (document.querySelector('#opts-5-1 .option-row.selected')) done++;
+    if (document.getElementById('q-5-2').value.trim() || document.getElementById('q-5-3').value.trim()) done++;
+    if (document.querySelector('#opts-5-4 .option-row.selected')) done++;
+    document.getElementById('progressBar').style.width = Math.round((done / totals) * 100) + '%';
+  }
+
+  function getScore(id) {
+    const sel = document.querySelector(`.score-scale[data-id="${id}"] .score-btn.selected`);
+    return sel ? sel.dataset.val : '';
+  }
+  function getText(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+  function getMulti(listId) {
+    const sels = document.querySelectorAll(`#${listId} .option-row.selected`);
+    return Array.from(sels).map(r => r.dataset.val).join('; ');
+  }
+  function getPill(wrapId) {
+    const sel = document.querySelector(`#${wrapId} .pill.selected`);
+    return sel ? sel.dataset.val : '';
+  }
+  function csvEscape(str) {
+    str = String(str ?? '').replace(/"/g, '""');
+    return `"${str}"`;
+  }
+
+  function exportCSV() {
+    const rows = [
+      ['Sección', 'Pregunta', 'Respuesta'],
+      ['Meta', 'Cliente', CLIENT_NAME],
+      ['Meta', 'Mes', MONTH_LABEL],
+      ['1. Punto de Partida', '1.1 La Decisión', getText('q-1-1')],
+      ['1. Punto de Partida', '1.2 Por qué a mí (selección)', getMulti('opts-1-2')],
+      ['1. Punto de Partida', '1.2 Por qué a mí (otro)', getText('q-1-2-other')],
+      ['1. Punto de Partida', '1.2 Por qué a mí (una frase)', getText('q-1-2-sentence')],
+      ['2. Estrategia', '2.1 Claridad (0-5)', getScore('score-1')],
+      ['2. Estrategia', '2.1 Qué haría falta para un 5', getText('q-2-1-sub')],
+      ['2. Estrategia', '2.2 Prueba de Decisión', getText('q-2-2')],
+      ['2. Estrategia', '2.3 Cómo llamarlo (selección)', getMulti('opts-2-3')],
+      ['2. Estrategia', '2.3 Otra frase', getText('q-2-3-other')],
+      ['3. Ejecución', '3.1 Calidad (0-5)', getScore('score-2')],
+      ['3. Ejecución', '3.1 Qué le falta para un 5', getText('q-3-1-sub')],
+      ['3. Ejecución', '3.2 Voz (0-5)', getScore('score-3')],
+      ['3. Ejecución', '3.2 Causa (contexto/escritura/ambos)', getPill('pills-3-2')],
+      ['3. Ejecución', '3.2 Frase o post específico', getText('q-3-2-sub')],
+      ['3. Ejecución', '3.3 Subir', getMulti('opts-3-3-up')],
+      ['3. Ejecución', '3.3 Bajar', getMulti('opts-3-3-down')],
+      ['4. Colaboración', '4.1 Trabajar Juntos (0-5)', getScore('score-4')],
+      ['4. Colaboración', '4.1 Punto de fricción', getText('q-4-1-sub')],
+      ['4. Colaboración', '4.2 La Diferencia', getText('q-4-2')],
+      ['5. Resultado y Cita', '5.1 Qué ha cambiado (selección)', getMulti('opts-5-1')],
+      ['5. Resultado y Cita', '5.1 Otro cambio', getText('q-5-1-other')],
+      ['5. Resultado y Cita', '5.2 Frase de comparación', getText('q-5-2')],
+      ['5. Resultado y Cita', '5.3 Recomendación', getText('q-5-3')],
+      ['5. Resultado y Cita', '5.4 Permiso de cita', getMulti('opts-5-4')],
+      ['6. Próximo Mes', '6.1 La Prioridad', getText('q-6-1')],
+    ];
+    const csv = rows.map(r => r.map(csvEscape).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const safeName = CLIENT_NAME.replace(/[^a-z0-9]/gi, '_');
+    const safeMonth = MONTH_LABEL.replace(/[^a-z0-9]/gi, '_');
+    a.download = `Feedback_${safeName}_${safeMonth}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>
